@@ -72,7 +72,7 @@ steps:
 1. 관련 내용은 [해당 링크](https://cloud.google.com/cloud-build/docs/access-private-github-repos)에 자세히 나와있으니 참고.
 
 # Build 3-2
-가이드에 따라 추가
+가이드에 따라 [해당 step 부분](https://cloud.google.com/cloud-build/docs/access-private-github-repos#prepare_the_build)이 추가된다.
 
 # Done
 이러면 이제 master에 머지를 할 때마다 자동으로 GAE로 코드가 갱신된다.
@@ -80,4 +80,4 @@ steps:
 # Note
 여러가지 알아둬야 할 사항
 1. KMS의 키는 주기적으로 갱신이 되기 때문에 키가 만료되면 암호화된 파일들은 사용할 수 없게 된다. 그래서 그 전에 새로운 키로 갱신해 주어야 한다.
-1. trigger에 의한 빌드가 `gcloud app deploy`로 인해 새로운 build과정을 만들면서 이중으로 CodeBuild가 생기며 이로 인해 총 build시간이 불필요하게 늘어나게 된다.
+1. GAE로 디플로이 하는 과정에서 `gcloud app deploy`로 인해 새로운 build를 만들어 버린다. 이로 인해 이중으로 CodeBuild가 생기며 총 build시간이 늘어나며, 불필요한 과금이 발생시킬 수 있다. 하루에 120분까지는 무료로 사용할 수 있다.
