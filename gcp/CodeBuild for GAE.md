@@ -7,7 +7,10 @@
 
 # Trigger
 github에서 master 브렌치에 푸시를 하면 Cloud build에서 자동으로 실행할 수 있도록 설정하는 작업이다.
-1. [Cloud Build](https://console.cloud.google.com/cloud-build/triggers)에서 새로운 trigger를 설정한다.
+1. [Cloud Build](https://console.cloud.google.com/cloud-build/triggers)에서 먼저 github와 연동하여 새로운 repo를 연결한다.
+    * APP 권한에서 어떤 repo와 연동할 지 선택할 수 있으며 필요한 repo만 읽을 수 있도록 그때그때 권한을 추가한다.
+1. 새로운 trigger를 추가하여 어떤 이벤트를 처리해 줄 수 있도록 할 지 설정한다.
+    * 대표적으론 Pull Request와 Push to Master가 있고, 상황에 맞춰 여러가지를 더 구성한다.
 1. `codebuild.yaml` 파일에서 빌드할 수 있도록 명시해 줘야 한다.
 
 # Build 1
