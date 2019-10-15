@@ -77,6 +77,43 @@ steps:
 # Build 3-2
 가이드에 따라 [해당 step 부분](https://cloud.google.com/cloud-build/docs/access-private-github-repos#prepare_the_build)이 추가된다.
 
+# Step 4
+1. 테스트에 필요한 모듈을 설치한 다음,
+1. 테스트 코드를 실행한다.
+
+# Test
+기본 python 코맨드 컨셉
+1. `pip install -r requirements.txt`
+    * 필요한 모듈을 설치한 다음
+1. `unittest discover -s tests`
+    * 테스트 코드를 실행시킨다. tests폴더에 있는 TestCode들을 자동으로 찾아준다.
+
+# Build 4
+```
+steps:
+  - name: python:3.7
+    entrypoint: python3
+    args:
+      - -m
+      - pip
+      - install
+      - -r
+      - requirements.txt
+      - -t
+      - ./venv
+  - name: python:3.7
+    entrypoint: python3
+    args:
+      - -m 
+      - unittest
+      - discover
+      - -s
+      - tests
+    env:
+      - "PYTHONPATH=./venv"
+```
+주의해야 할 점은 step이 달라지면 환경이 아예 바뀌어서 앞의 step에서 pip로 설치한 모듈이 뒤의 step에서 적용되지 않는 듯 하다. 그래서 `PYTHONPATH`를 명시해 주어야 한다.
+
 # Done
 이러면 이제 master에 머지를 할 때마다 자동으로 GAE로 코드가 갱신된다.
 
