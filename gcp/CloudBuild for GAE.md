@@ -11,11 +11,11 @@ github에서 master 브렌치에 푸시를 하면 Cloud build에서 자동으로
     * APP 권한에서 어떤 repo와 연동할 지 선택할 수 있으며 필요한 repo만 읽을 수 있도록 그때그때 권한을 추가한다.
 1. 새로운 trigger를 추가하여 어떤 이벤트를 처리해 줄 수 있도록 할 지 설정한다.
     * 대표적으론 Pull Request와 Push to Master가 있고, 상황에 맞춰 여러가지를 더 구성한다.
-1. `codebuild.yaml` 파일에서 빌드할 수 있도록 명시해 줘야 한다.
+1. `cloudbuild.yaml` 파일에서 빌드할 수 있도록 명시해 줘야 한다.
 
 # Build 1
 빌드를 하기 위해서 필요한 단계들을 명시해 준다. 원래 `gcloud app deploy`를 통해서 빌드한 뒤 코드를 실행시켰을 것이다.
-1. `codebuild.yaml`의 파일 구성
+1. `cloudbuild.yaml`의 파일 구성
 ```
 steps:
   - name: gcr.io/cloud-builders/gcloud
@@ -32,7 +32,7 @@ steps:
 1. 빌드할 때 암호화한 파일을 복호화하여 사용한다.
 
 # Build 2
-1. `codebuild.yaml` 파일에 복호화를 위한 step을 추가한다.
+1. `cloudbuild.yaml` 파일에 복호화를 위한 step을 추가한다.
 ```
 steps
   - name: gcr.io/cloud-builders/gcloud
@@ -83,4 +83,4 @@ steps:
 # Note
 여러가지 알아둬야 할 사항
 1. KMS의 키는 주기적으로 갱신이 되기 때문에 키가 만료되면 암호화된 파일들은 사용할 수 없게 된다. 그래서 그 전에 새로운 키로 갱신해 주어야 한다.
-1. GAE로 디플로이 하는 과정에서 `gcloud app deploy`로 인해 새로운 build를 만들어 버린다. 이로 인해 이중으로 CodeBuild가 생기며 총 build시간이 늘어나며, 불필요한 과금이 발생시킬 수 있다. 하루에 120분까지는 무료로 사용할 수 있다.
+1. GAE로 디플로이 하는 과정에서 `gcloud app deploy`로 인해 새로운 build를 만들어 버린다. 이로 인해 이중으로 build가 생기며 총 build시간이 늘어나며, 불필요한 과금이 발생시킬 수 있다. 하루에 120분까지는 무료로 사용할 수 있다.
